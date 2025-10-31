@@ -1,0 +1,24 @@
+{
+  "build": {
+    "builder": "NIXPACKS",
+    "nixpacksPlan": {
+      "phases": {
+        "install": {
+          "cmds": ["pnpm install"]
+        },
+        "build": {
+          "cmds": ["pnpm db:push", "pnpm build"]
+        }
+      }
+    }
+  },
+  "deploy": {
+    "startCommand": "pnpm start",
+    "restartPolicyType": "ON_FAILURE",
+    "healthcheckPath": "/api/trpc/health"
+  },
+  "env": {
+    "NODE_ENV": "production",
+    "PORT": "3000"
+  }
+}

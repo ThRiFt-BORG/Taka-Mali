@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "client/vite.config.ts",
+      "use": "@vercel/vite"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "https://taka-ni-mali-production.up.railway.app/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/client/dist/$1"
+    }
+  ],
+  "env": {
+    "VITE_API_URL": "https://taka-ni-mali-production.up.railway.app",
+    "VITE_APP_TITLE": "CE4HOW Taka ni Mali",
+    "VITE_APP_LOGO": "/logo.png"
+  }
+}

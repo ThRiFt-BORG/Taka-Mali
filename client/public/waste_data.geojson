@@ -1,0 +1,53 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rosterman Dumpsite",
+        "type": "Informal Dumping Site",
+        "description": "Main dumping site mentioned in the document."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [34.72066, 0.25509]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Regen Organics Fertilizer Processing Plant",
+        "type": "Waste Processing Facility",
+        "description": "Located in Mumias, processes organic waste."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [34.48796, 0.33474]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Khayenga Refuse Chamber (near Khayenga Market)",
+        "type": "Formal Waste Receptacle",
+        "description": "Managed by Khayenga Self Help Group."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [34.77152, 0.20819]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Lurambi Refuse Chamber (in Lurambi Market)",
+        "type": "Formal Waste Receptacle",
+        "description": "Operated by well-organized youth and community groups."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [34.76485, 0.2998]
+      }
+    }
+  ]
+}
