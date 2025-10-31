@@ -1,2 +1,22 @@
+# ==========================
+# Taka ni Mali Backend (Railway)
+# ==========================
+
+[phases.setup]
+# Specify versions of Node, pnpm, and optional tools
+nixPkgs = ["nodejs_18", "pnpm-9_x", "openssl"]
+
 [phases.install]
+# Allow lockfile updates to prevent frozen install errors
 cmds = ["pnpm install --no-frozen-lockfile"]
+
+[phases.build]
+# Run migrations and build your app
+cmds = [
+  "pnpm db:push",
+  "pnpm build"
+]
+
+[start]
+# Production start command
+cmd = "pnpm start"
