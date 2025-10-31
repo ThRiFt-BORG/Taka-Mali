@@ -42,6 +42,7 @@ export const collections = mysqlTable("collections", {
   collectionCount: int("collectionCount").default(1).notNull(),
   latitude: decimal("latitude", { precision: 10, scale: 8 }),
   longitude: decimal("longitude", { precision: 11, scale: 8 }),
+  comments: text("comments"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
