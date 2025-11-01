@@ -132,23 +132,25 @@ export default function Dashboard() {
     }));
   };
 
+  // ✅ Fixed background color for loading state
   if (collectionsLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-lime-800">
-        <Loader2 className="animate-spin w-8 h-8 text-white" />
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-amber-100 via-amber-200 to-amber-300">
+        <Loader2 className="animate-spin w-8 h-8 text-amber-700" />
       </div>
     );
   }
 
+  // ✅ Main dashboard layout with amber gradient
   return (
-    <div className="min-h-screen bg-gradient-to-br from-lime-300 via-green-400 to-emerald-500 p-4 md:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-amber-100 via-amber-200 to-amber-300 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2 rounded-lg">
+          <h1 className="text-4xl font-bold text-amber-800 mb-2 rounded-lg">
             Waste Management Dashboard
           </h1>
-          <p className="text-black">
+          <p className="text-amber-700">
             Monitor and analyze waste collection data across Kakamega Municipality
           </p>
         </div>
@@ -156,7 +158,7 @@ export default function Dashboard() {
         {/* Top Navigation */}
         <div className="flex space-x-4 mb-8">
           <Link href="/">
-            <Button className="bg-white text-lime-800 hover:bg-amber-200 border border-lime-700">
+            <Button className="bg-white text-amber-800 hover:bg-amber-200 border border-amber-600">
               Home
             </Button>
           </Link>
@@ -164,9 +166,9 @@ export default function Dashboard() {
 
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <Card className="bg-amber-400">
+          <Card className="bg-amber-400 shadow-md">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-black">
+              <CardTitle className="text-sm font-medium text-amber-900">
                 Total Records
               </CardTitle>
             </CardHeader>
@@ -177,9 +179,9 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card className="bg-amber-400">
+          <Card className="bg-amber-400 shadow-md">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-black">
+              <CardTitle className="text-sm font-medium text-amber-900">
                 Total Volume (tons)
               </CardTitle>
             </CardHeader>
@@ -190,9 +192,9 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card className="bg-amber-400">
+          <Card className="bg-amber-400 shadow-md">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-black">
+              <CardTitle className="text-sm font-medium text-amber-900">
                 Waste Types
               </CardTitle>
             </CardHeader>
@@ -211,13 +213,13 @@ export default function Dashboard() {
           {/* Left Column */}
           <div className="space-y-6">
             {/* Filters */}
-            <Card className="bg-amber-400">
+            <Card className="bg-amber-400 shadow-md">
               <CardHeader>
-                <CardTitle className="text-lime-900">Filters</CardTitle>
+                <CardTitle className="text-amber-900">Filters</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-lime-900">
+                  <label className="block text-sm font-medium mb-2 text-amber-900">
                     Waste Type
                   </label>
                   <select
@@ -235,7 +237,7 @@ export default function Dashboard() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-lime-900">
+                    <label className="block text-sm font-medium mb-2 text-amber-900">
                       Start Date
                     </label>
                     <input
@@ -247,7 +249,7 @@ export default function Dashboard() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-lime-900">
+                    <label className="block text-sm font-medium mb-2 text-amber-900">
                       End Date
                     </label>
                     <input
@@ -261,7 +263,7 @@ export default function Dashboard() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-lime-900">
+                  <label className="block text-sm font-medium mb-2 text-amber-900">
                     Waste Separated
                   </label>
                   <select
@@ -292,7 +294,7 @@ export default function Dashboard() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-lime-900">
+                    <label className="block text-sm font-medium mb-2 text-amber-900">
                       Min Volume (tons)
                     </label>
                     <input
@@ -305,7 +307,7 @@ export default function Dashboard() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-lime-900">
+                    <label className="block text-sm font-medium mb-2 text-amber-900">
                       Max Volume (tons)
                     </label>
                     <input
@@ -320,18 +322,21 @@ export default function Dashboard() {
                 </div>
 
                 <Button
-                  className="w-full bg-white border-lime-700 text-lime-800 hover:bg-amber-300"
+                  className="w-full bg-white border-amber-700 text-amber-800 hover:bg-amber-300"
                   onClick={handleResetFilters}
                 >
                   Reset Filters
                 </Button>
 
                 {selectedMarker && (
-                  <div className="p-3 bg-lime-100 border border-lime-300 rounded-md text-sm">
-                    <p className="font-semibold text-lime-900">
-                      Selected Site:<span className="text-white"> {selectedMarker.siteName}</span>
+                  <div className="p-3 bg-amber-100 border border-amber-300 rounded-md text-sm">
+                    <p className="font-semibold text-amber-900">
+                      Selected Site:{" "}
+                      <span className="text-amber-700">
+                        {selectedMarker.siteName}
+                      </span>
                     </p>
-                    <p className="text-lime-800">
+                    <p className="text-amber-700">
                       Showing data for this site only.
                     </p>
                   </div>
@@ -340,9 +345,9 @@ export default function Dashboard() {
             </Card>
 
             {/* Table */}
-            <Card className="bg-amber-400">
+            <Card className="bg-amber-400 shadow-md">
               <CardHeader>
-                <CardTitle className="text-lime-900">
+                <CardTitle className="text-amber-900">
                   Collection Records ({collections?.length || 0})
                 </CardTitle>
               </CardHeader>
@@ -350,7 +355,7 @@ export default function Dashboard() {
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-lime-700 text-lg text-white">
+                      <tr className="border-b border-amber-700 text-lg text-white">
                         <th className="text-left py-2 px-2">Date</th>
                         <th className="text-left py-2 px-2">Site</th>
                         <th className="text-left py-2 px-2">Type</th>
@@ -362,7 +367,7 @@ export default function Dashboard() {
                         collections.slice(0, 10).map((record: CollectionRecord) => (
                           <tr
                             key={record.id}
-                            className="border-b border-lime-600 hover:bg-lime-100/30 text-black"
+                            className="border-b border-amber-600 hover:bg-amber-100/30 text-amber-900"
                           >
                             <td className="py-2 px-2">
                               {record.collectionDate.toLocaleDateString()}
@@ -374,7 +379,10 @@ export default function Dashboard() {
                         ))
                       ) : (
                         <tr>
-                          <td colSpan={4} className="py-4 text-center text-lime-900/70">
+                          <td
+                            colSpan={4}
+                            className="py-4 text-center text-amber-900/70"
+                          >
                             No records found for the selected filters
                           </td>
                         </tr>
@@ -384,14 +392,13 @@ export default function Dashboard() {
                 </div>
               </CardContent>
             </Card>
-
           </div>
 
           {/* Right Column */}
           <div className="space-y-6">
-            <Card className="bg-white">
+            <Card className="bg-white shadow-md">
               <CardHeader>
-                <CardTitle className="text-lime-900">Geospatial Map</CardTitle>
+                <CardTitle className="text-amber-800">Geospatial Map</CardTitle>
               </CardHeader>
               <CardContent className="h-[400px]">
                 <MapView
@@ -402,9 +409,9 @@ export default function Dashboard() {
               </CardContent>
             </Card>
 
-            <Card className="bg-white">
+            <Card className="bg-white shadow-md">
               <CardHeader>
-                <CardTitle className="text-lime-900">
+                <CardTitle className="text-amber-800">
                   {selectedMarker
                     ? `Trends for ${selectedMarker.siteName}`
                     : "Overall Collection Trends"}

@@ -232,13 +232,20 @@ export default function MapView({ onMarkerClick, selectedMarker }: MapViewProps)
           <p><strong>Status:</strong> ${props.status}</p>
           <p><strong>Description:</strong> ${props.description}</p>
           <p><strong>Challenges:</strong> ${props.challenges}</p>
-          ${props.image ? `<img src="${props.image}" alt="${props.name}" style="margin-top:10px;max-width:100%;border-radius:4px;">` : ""}
+          ${
+            props.image
+              ? `<img src="${props.image}" alt="${props.name}" style="margin-top:10px;max-width:100%;border-radius:4px;">`
+              : ""
+          }
           <button class="get-directions-btn" data-lat="${lat}" data-lon="${lon}" style="margin-top:10px;padding:6px 10px;background-color:#007bff;color:white;border:none;border-radius:4px;cursor:pointer;">Get Directions</button>
         </div>`;
 
       const marker = L.marker([lat, lon], { icon }).bindPopup(popupContent);
 
-      marker.on("click", () => {
+      marker.on("click", (e) => {
+        e.originalEvent?.preventDefault?.();
+        e.originalEvent?.stopPropagation?.();
+
         onMarkerClick({
           id: 0,
           lat,
@@ -249,7 +256,6 @@ export default function MapView({ onMarkerClick, selectedMarker }: MapViewProps)
           date: new Date(),
         });
 
-        // Smooth pan + popup open
         map.panTo([lat, lon], { animate: true, duration: 0.6 });
         setTimeout(() => marker.openPopup(), 400);
       });
@@ -262,17 +268,25 @@ export default function MapView({ onMarkerClick, selectedMarker }: MapViewProps)
     map.fitBounds(bounds, { padding: [30, 30] });
     L.control.scale({ metric: true }).addTo(map);
 
-    // Directions button listener
-    document.addEventListener("click", (e) => {
+    // --- SAFE DIRECTIONS HANDLER ---
+    const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (target && target.matches(".get-directions-btn")) {
+        e.preventDefault();
+        e.stopPropagation();
         const lat = target.dataset.lat;
         const lon = target.dataset.lon;
         if (lat && lon) {
-          window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`, "_blank");
+          window.open(
+            `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`,
+            "_blank"
+          );
         }
       }
-    });
+    };
+
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
   }, [onMarkerClick]);
 
   // Highlight selected marker
