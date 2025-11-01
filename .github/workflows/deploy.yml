@@ -1,0 +1,76 @@
+name: Deploy CE4HOW Taka ni Mali v2 (Frontend + Backend)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ---------------------------------------------------------------
+      # 1️⃣ Checkout repository
+      # ---------------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ---------------------------------------------------------------
+      # 2️⃣ Setup Node.js + PNPM
+      # ---------------------------------------------------------------
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install PNPM
+        run: npm install -g pnpm
+
+      # ---------------------------------------------------------------
+      # 3️⃣ Install dependencies
+      # ---------------------------------------------------------------
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # ---------------------------------------------------------------
+      # 4️⃣ Verify build compiles successfully
+      # ---------------------------------------------------------------
+      - name: Build project
+        run: pnpm build
+
+      # ---------------------------------------------------------------
+      # 5️⃣ Verify Drizzle can connect and push schema
+      #     This ensures the DB is ready BEFORE deploy
+      # ---------------------------------------------------------------
+      - name: Test Drizzle migration
+        env:
+          DATABASE_URL: ${{ secrets.RAILWAY_DB_URL }}
+        run: |
+          echo "Testing database schema sync..."
+          pnpm db:push || (echo "❌ Migration failed — aborting deploy!" && exit 1)
+
+      # ---------------------------------------------------------------
+      # 6️⃣ Deploy frontend to Vercel
+      # ---------------------------------------------------------------
+      - name: Deploy frontend to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: ./client
+          prod: true
+
+      # ---------------------------------------------------------------
+      # 7️⃣ Deploy backend to Railway (only if DB push succeeded)
+      # ---------------------------------------------------------------
+      - name: Deploy backend to Railway
+        if: success()
+        uses: railwayapp/railway-deploy@v2
+        with:
+          railwayToken: ${{ secrets.RAILWAY_API_KEY }}
+          serviceName: Taka-Mali
+          buildCommand: pnpm install --no-frozen-lockfile && pnpm build
+          startCommand: pnpm start
